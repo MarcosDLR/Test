@@ -17,3 +17,4 @@ C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1
 C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Model.pdb
 C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Context.pdb
 C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.csproj.CopyComplete
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Backend.Views.dll

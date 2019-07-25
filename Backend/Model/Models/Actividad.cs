@@ -11,7 +11,7 @@ namespace Model.Models
         public DateTime? Fecha { get; set; }
         public int? IdAccion { get; set; }
 
-        public Accion IdAccionNavigation { get; set; }
-        public Usuario IdUsuarioAdminNavigation { get; set; }
+        //public Accion IdAccionNavigation { get; set; }
+        //public Usuario IdUsuarioAdminNavigation { get; set; }
     }
 }

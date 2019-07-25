@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Contexts.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Model.Models;
 
 namespace Backend.Controllers
 {
@@ -10,36 +13,87 @@ namespace Backend.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly TestDbContext _context;
+
+        public ValuesController(TestDbContext context)
+        {
+            _context = context;
+        }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IEnumerable<Usuario> Usuarios()
         {
-            return new string[] { "value1", "value2" };
+            IEnumerable<Usuario> usuarios = (from us in _context.Usuario
+                                      select us);
+
+            return usuarios;
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("getDetalle/{id}")]
+        public IActionResult DetalleUsuario(int id)
         {
-            return "value";
+            var usuario = _context.Usuario.Find(id);
+
+            if (usuario == null)
+            {
+                NotFound();
+            }
+
+            //var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id);
+
+            return Ok(usuario);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult CrearUsuario([FromBody] Usuario usuario)
         {
+            if (ModelState.IsValid)
+            {
+                _context.Usuario.Add(usuario);
+                _context.SaveChanges();
+
+                return Ok(usuario);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Usuario usuario)
         {
+            if (id != usuario.Id)
+            {
+                BadRequest();
+            }
+
+            _context.Entry(usuario).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return NoContent();
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("eliminarUsuario/{id}")]
+        public IActionResult Eliminar(int id)
         {
+            var usuario = _context.Usuario.Find(id);
+
+            if (usuario == null)
+            {
+                NotFound();
+            }
+
+            _context.Remove(usuario);
+            _context.SaveChanges();
+
+            return NoContent();
+
         }
     }
 }
