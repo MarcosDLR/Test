@@ -29,19 +29,18 @@ namespace Backend.Controllers
             return usuarios;
         }
 
-        // GET api/values/5
-        [HttpGet("getDetalle/{id}")]
+        // GET api/values/Detalles/{id}
+        [HttpGet("Detalles/{id}")]
         public IActionResult DetalleUsuario(int id)
         {
             var usuario = _context.Usuario.Find(id);
 
             if (usuario == null)
             {
-                NotFound();
+                return NotFound();
             }
 
             //var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id);
-
             return Ok(usuario);
         }
 
@@ -63,36 +62,38 @@ namespace Backend.Controllers
 
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Usuario usuario)
+        // PUT api/values/editarUsuario/{id}
+        [HttpPut("editarUsuario/{id}")]
+        public async Task<IActionResult> EditarUsuario(int id, [FromBody] Usuario usuario)
         {
             if (id != usuario.Id)
             {
-                BadRequest();
+                return BadRequest();
+            }
+            else
+            {
+                _context.Entry(usuario).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
-            _context.SaveChanges();
-
-            return NoContent();
+            return Ok(usuario);
         }
 
-        // DELETE api/values/5
+        // DELETE api/values/eliminarUsuario/{id}
         [HttpDelete("eliminarUsuario/{id}")]
         public IActionResult Eliminar(int id)
         {
-            var usuario = _context.Usuario.Find(id);
+            var usuario = _context.Usuario.SingleOrDefault(u => u.Id == id);
 
             if (usuario == null)
             {
-                NotFound();
+               return NotFound();
             }
 
             _context.Remove(usuario);
             _context.SaveChanges();
 
-            return NoContent();
+            return Ok(usuario);
 
         }
     }
