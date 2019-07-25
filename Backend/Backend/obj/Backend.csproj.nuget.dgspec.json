@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LUGOTECH_RD_4\\source\\repos\\Backend\\Backend\\Backend.csproj": {}
+    "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LUGOTECH_RD_4\\source\\repos\\Backend\\Backend\\Backend.csproj": {
+    "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LUGOTECH_RD_4\\source\\repos\\Backend\\Backend\\Backend.csproj",
+        "projectUniqueName": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "C:\\Users\\LUGOTECH_RD_4\\source\\repos\\Backend\\Backend\\Backend.csproj",
-        "packagesPath": "C:\\Users\\LUGOTECH_RD_4\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LUGOTECH_RD_4\\source\\repos\\Backend\\Backend\\obj\\",
+        "projectPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Backend\\Backend.csproj",
+        "packagesPath": "C:\\Users\\LUGOTECH_RD_3\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\LUGOTECH_RD_4\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LUGOTECH_RD_3\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -51,6 +51,20 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.2, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.1.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[2.1.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.11, )"
             },
             "Microsoft.NETCore.App": {
               "target": "Package",

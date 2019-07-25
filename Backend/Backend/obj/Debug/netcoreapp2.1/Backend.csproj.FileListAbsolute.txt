@@ -1,0 +1,11 @@
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Backend.deps.json
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Backend.runtimeconfig.json
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Backend.runtimeconfig.dev.json
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Backend.dll
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.csprojAssemblyReference.cache
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.csproj.CoreCompileInputs.cache
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.RazorAssemblyInfo.cache
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.RazorAssemblyInfo.cs
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.AssemblyInfoInputs.cache
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.AssemblyInfo.cs
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.RazorTargetAssemblyInfo.cache
