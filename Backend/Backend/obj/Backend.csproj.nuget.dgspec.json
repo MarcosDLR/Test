@@ -29,7 +29,14 @@
         },
         "frameworks": {
           "netcoreapp2.1": {
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Context\\Context.csproj": {
+                "projectPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Context\\Context.csproj"
+              },
+              "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\Model.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -52,6 +59,117 @@
               "target": "Package",
               "version": "[2.1.2, )"
             },
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.1.9, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Context\\Context.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Context\\Context.csproj",
+        "projectName": "Context",
+        "projectPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Context\\Context.csproj",
+        "packagesPath": "C:\\Users\\LUGOTECH_RD_3\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Context\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\LUGOTECH_RD_3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {
+              "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\Model.csproj": {
+                "projectPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\Model.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\Model.csproj",
+        "projectName": "Model",
+        "projectPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\Model.csproj",
+        "packagesPath": "C:\\Users\\LUGOTECH_RD_3\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\LUGOTECH_RD_3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[2.1.11, )"
@@ -67,6 +185,7 @@
               "version": "[2.1.11, )"
             },
             "Microsoft.NETCore.App": {
+              "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true

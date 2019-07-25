@@ -9,3 +9,11 @@ C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1
 C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.AssemblyInfoInputs.cache
 C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.AssemblyInfo.cs
 C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.RazorTargetAssemblyInfo.cache
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Backend.pdb
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.dll
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.pdb
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Context.dll
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Model.dll
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Model.pdb
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\bin\Debug\netcoreapp2.1\Context.pdb
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Backend\obj\Debug\netcoreapp2.1\Backend.csproj.CopyComplete

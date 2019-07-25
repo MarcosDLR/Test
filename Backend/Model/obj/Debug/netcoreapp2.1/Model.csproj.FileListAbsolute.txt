@@ -6,3 +6,6 @@ C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Model\obj\Debug\netcoreapp2.1\M
 C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Model\obj\Debug\netcoreapp2.1\Model.AssemblyInfo.cs
 C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Model\bin\Debug\netcoreapp2.1\Model.runtimeconfig.json
 C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Model\bin\Debug\netcoreapp2.1\Model.runtimeconfig.dev.json
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Model\bin\Debug\netcoreapp2.1\Model.pdb
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Model\obj\Debug\netcoreapp2.1\Model.dll
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Model\obj\Debug\netcoreapp2.1\Model.pdb
