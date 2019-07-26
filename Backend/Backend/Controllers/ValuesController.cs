@@ -6,6 +6,7 @@ using Contexts.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Model.Models;
+using Model.ViewModels;
 
 namespace Backend.Controllers
 {
@@ -14,27 +15,52 @@ namespace Backend.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly TestDbContext _context;
-
         public ValuesController(TestDbContext context)
         {
             _context = context;
         }
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<Usuario> Usuarios()
+        public IActionResult Usuarios()
         {
-            IEnumerable<Usuario> usuarios = (from us in _context.Usuario
-                                      select us);
+            //IEnumerable<Usuario> usuarios = (from us in _context.Usuario
+            //                          select us);
 
-            return usuarios;
+            //List<Usuario> usuarios = _context.Usuario.Include(u => u.Role).ToList();
+            var usuarios = _context.Usuario
+                            .Include(r => r.Role)
+                            .Select(p => new  {
+                               p.Id,
+                               p.Nombre,
+                               p.Apellido,
+                               p.Direccion,
+                               p.Telefono,
+                               p.Usuario1,
+                               p.RoleId,
+                               p.Role
+                            }).ToList();
+            return Ok(usuarios);
         }
 
-        // GET api/values/detalles/{id}
+        // GET api/values/detalles/4
         [HttpGet("detalles/{id}")]
         public IActionResult DetalleUsuario(int id)
         {
             //var usuario = _context.Usuario.Find(id);
-            var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id);
+            //var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id);
+            var usuario = _context.Usuario
+                            .Where(u => u.Id == id)
+                            .Select(p => new {
+                                p.Id,
+                                p.Nombre,
+                                p.Apellido,
+                                p.Direccion,
+                                p.Telefono,
+                                p.Usuario1,
+                                p.RoleId
+                            })
+                            .FirstOrDefault();
 
             if (usuario == null)
             {
@@ -62,26 +88,39 @@ namespace Backend.Controllers
 
         }
 
-        // PUT api/values/editarUsuario/{id}
+        // PUT api/values/editarUsuario
         [HttpPut("editarUsuario")]
-        public async Task<IActionResult> EditarUsuario([FromBody] Usuario usuario) //Editar usuario existente
+        public async Task<IActionResult> EditarUsuario([FromBody] UsuarioViewModel usuario) //Editar usuario existente
         {
-            var id = usuario.Id;
+            //var id = usuario.Id;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
-            if (id != usuario.Id)
+            var userNew = _context.Usuario.FirstOrDefault(u => u.Id == usuario.Id);
+
+            if (userNew == null)
             {
                 return BadRequest();
             }
             else
             {
-                _context.Entry(usuario).State = EntityState.Modified;
+                userNew.Nombre = usuario.Nombre;
+                userNew.Apellido = usuario.Apellido;
+                userNew.Direccion = usuario.Direccion;
+                userNew.Telefono = usuario.Telefono;
+                userNew.Usuario1 = usuario.Usuario1;
+                userNew.RoleId = usuario.RoleId;
+                
+                //_context.Entry(usuario).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
 
             return Ok(usuario);
         }
 
-        // DELETE api/values/eliminarUsuario/{id}
+        // DELETE api/values/eliminarUsuario/3
         [HttpDelete("eliminarUsuario/{id}")]
         public IActionResult Eliminar(int id) //Eliminar usuario existente
         {
@@ -100,18 +139,20 @@ namespace Backend.Controllers
         }
 
         //Almacenar actividad en realizada
-        public IActionResult Actividad (int id, int id_afectada, int id_accion)
+        //POST api/values/log
+        [HttpPost("log")]
+        public IActionResult Actividad ([FromQuery] int idLog, [FromQuery]int idAfectada, [FromQuery] int idAccion)
         {
-            var usLogged = _context.Usuario.FirstOrDefault(u => u.Id == id);
+            var usLogged = _context.Usuario.FirstOrDefault(u => u.Id == idLog);
 
             //agregar registro a BD
             if (usLogged != null)
             {
                 Actividad registro = new Actividad {
-                    IdUsuarioAdmin = id,
-                    IdUsuario = id_afectada,
+                    IdUsuarioAdmin = idLog,
+                    IdUsuario = idAfectada,
                     Fecha = DateTime.Now,
-                    IdAccion = id_accion
+                    IdAccion = idAccion
                 };
 
                 try
@@ -129,6 +170,23 @@ namespace Backend.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        //PUT api/values/cambiarPassword/3
+        [HttpPut("cambiarPassword/{id}")]
+        public IActionResult CambiarPassword (int id, [FromQuery] string oldPass, [FromQuery] string newPass)//cambio de contrasena
+        {
+            var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id && u.Password == oldPass);
+
+            if (usuario == null)
+            {
+                return BadRequest();
+            }
+
+            usuario.Password = newPass;
+            _context.SaveChanges();
+
+            return Ok(usuario);
         }
     }
 }

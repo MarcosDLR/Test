@@ -19,7 +19,9 @@ namespace Model.Models
         [Column("Usuario")]
         public string Usuario1 { get; set; }
         public string Password { get; set; }
-        public int? IdRole { get; set; }
+        [Column("IdRole")]
+        public int? RoleId { get; set; }
+        public Role Role { get; set; }
 
         //public Role IdRoleNavigation { get; set; }
         //public ICollection<Actividad> Actividad { get; set; }

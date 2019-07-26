@@ -8,6 +8,8 @@ using Model.Models;
 
 namespace Backend.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class LoginController : Controller
     {
 
@@ -18,41 +20,44 @@ namespace Backend.Controllers
             _context = context;
         }
 
-        public IActionResult Prueba()
+        [HttpGet("login")]
+        public IActionResult Validar([FromQuery] string userQ, [FromQuery] string passQ)
         {
-            return View();
-        }
-
-        [HttpGet("validar")]
-        public IActionResult Validar(string _userName, string _pass)
-        {
-            string userName = _userName;
-            string pass = _pass;
+            string userName = userQ;
+            string pass = passQ;
 
             //var usuario = (from us in _context.Usuario
             //               where us.Usuario1 == userName
-            //               select us.Nombre);
+            //               select us);
 
             var user = _context.Usuario.FirstOrDefault(u => u.Usuario1 == userName && u.Password == pass);
 
-            return Ok(user);
-        }
-
-        [HttpPost]
-        public IActionResult Registrar([FromBody] Usuario usuario)
-        {
-            if (ModelState.IsValid)
+            if (user != null)
             {
-                _context.Usuario.Add(usuario);
-                _context.SaveChanges();
-
-                return Ok(usuario);
+                return Ok(user);
             }
             else
             {
                 return BadRequest();
-
             }
+            
         }
+
+        //[HttpPost]
+        //public IActionResult Registrar([FromBody] Usuario usuario)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Usuario.Add(usuario);
+        //        _context.SaveChanges();
+
+        //        return Ok(usuario);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest();
+
+        //    }
+        //}
     }
 }
