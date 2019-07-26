@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Services\\Services.csproj": {}
+    "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Services\\Services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Services\\Services.csproj": {
+    "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Services\\Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Services\\Services.csproj",
+        "projectUniqueName": "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Services\\Services.csproj",
         "projectName": "Services",
-        "projectPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Services\\Services.csproj",
+        "projectPath": "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Services\\Services.csproj",
         "packagesPath": "C:\\Users\\LUGOTECH_RD_3\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Services\\obj\\",
+        "outputPath": "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

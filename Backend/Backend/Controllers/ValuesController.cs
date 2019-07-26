@@ -29,24 +29,24 @@ namespace Backend.Controllers
             return usuarios;
         }
 
-        // GET api/values/Detalles/{id}
-        [HttpGet("Detalles/{id}")]
+        // GET api/values/detalles/{id}
+        [HttpGet("detalles/{id}")]
         public IActionResult DetalleUsuario(int id)
         {
-            var usuario = _context.Usuario.Find(id);
+            //var usuario = _context.Usuario.Find(id);
+            var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id);
 
             if (usuario == null)
             {
                 return NotFound();
             }
 
-            //var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id);
             return Ok(usuario);
         }
 
-        // POST api/values
+        // POST api/values/crearUsuario
         [HttpPost]
-        public IActionResult CrearUsuario([FromBody] Usuario usuario)
+        public IActionResult CrearUsuario([FromBody] Usuario usuario) //Agregar un nuevo usuario.
         {
             if (ModelState.IsValid)
             {
@@ -63,9 +63,11 @@ namespace Backend.Controllers
         }
 
         // PUT api/values/editarUsuario/{id}
-        [HttpPut("editarUsuario/{id}")]
-        public async Task<IActionResult> EditarUsuario(int id, [FromBody] Usuario usuario)
+        [HttpPut("editarUsuario")]
+        public async Task<IActionResult> EditarUsuario([FromBody] Usuario usuario) //Editar usuario existente
         {
+            var id = usuario.Id;
+
             if (id != usuario.Id)
             {
                 return BadRequest();
@@ -81,7 +83,7 @@ namespace Backend.Controllers
 
         // DELETE api/values/eliminarUsuario/{id}
         [HttpDelete("eliminarUsuario/{id}")]
-        public IActionResult Eliminar(int id)
+        public IActionResult Eliminar(int id) //Eliminar usuario existente
         {
             var usuario = _context.Usuario.SingleOrDefault(u => u.Id == id);
 
@@ -95,6 +97,38 @@ namespace Backend.Controllers
 
             return Ok(usuario);
 
+        }
+
+        //Almacenar actividad en realizada
+        public IActionResult Actividad (int id, int id_afectada, int id_accion)
+        {
+            var usLogged = _context.Usuario.FirstOrDefault(u => u.Id == id);
+
+            //agregar registro a BD
+            if (usLogged != null)
+            {
+                Actividad registro = new Actividad {
+                    IdUsuarioAdmin = id,
+                    IdUsuario = id_afectada,
+                    Fecha = DateTime.Now,
+                    IdAccion = id_accion
+                };
+
+                try
+                {
+                    _context.Actividad.Add(registro);
+                    _context.SaveChanges();
+                }catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                return Ok(registro);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

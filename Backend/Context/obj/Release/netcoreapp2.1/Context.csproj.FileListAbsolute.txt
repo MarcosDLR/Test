@@ -1,0 +1,12 @@
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\bin\Release\netcoreapp2.1\Context.deps.json
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\bin\Release\netcoreapp2.1\Context.dll
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\bin\Release\netcoreapp2.1\Context.pdb
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\bin\Release\netcoreapp2.1\Model.dll
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\bin\Release\netcoreapp2.1\Model.pdb
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\obj\Release\netcoreapp2.1\Context.csprojAssemblyReference.cache
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\obj\Release\netcoreapp2.1\Context.csproj.CoreCompileInputs.cache
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\obj\Release\netcoreapp2.1\Context.AssemblyInfoInputs.cache
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\obj\Release\netcoreapp2.1\Context.AssemblyInfo.cs
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\obj\Release\netcoreapp2.1\Context.csproj.CopyComplete
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\obj\Release\netcoreapp2.1\Context.dll
+C:\Users\LUGOTECH_RD_3\Source\Repos\Test\Backend\Context\obj\Release\netcoreapp2.1\Context.pdb

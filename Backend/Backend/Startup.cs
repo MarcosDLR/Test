@@ -17,6 +17,8 @@ namespace Backend
 {
     public class Startup
     {
+        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +30,21 @@ namespace Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    //builder.AllowAnyOrigin();
+                    builder.WithOrigins("http://localhost:8080")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod()
+                                        .AllowAnyOrigin();
+                                        
+                    
+                });
+            });
 
             services.AddDbContext<TestDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("LocalDatabase")));
@@ -44,6 +61,8 @@ namespace Backend
             {
                 app.UseHsts();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
             app.UseMvc();
