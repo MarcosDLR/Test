@@ -21,6 +21,8 @@ namespace Model.Models
         public string Password { get; set; }
         [Column("IdRole")]
         public int? RoleId { get; set; }
+        [Column("HashSalt")]
+        public string HashSalt { get; set; }
         public Role Role { get; set; }
 
         //public Role IdRoleNavigation { get; set; }

@@ -7,27 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Model.Models;
 using Model.ViewModels;
+using Backend.Services;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/values")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
         private readonly TestDbContext _context;
-        public ValuesController(TestDbContext context)
+        private readonly PassHashService _passHash;
+        public UsuarioController(TestDbContext context, PassHashService passHash)
         {
             _context = context;
+            _passHash = passHash;
         }
 
         // GET api/values
         [HttpGet]
         public IActionResult Usuarios()
         {
-            //IEnumerable<Usuario> usuarios = (from us in _context.Usuario
-            //                          select us);
-
             //List<Usuario> usuarios = _context.Usuario.Include(u => u.Role).ToList();
+
             var usuarios = _context.Usuario
                             .Include(r => r.Role)
                             .Select(p => new  {
@@ -40,6 +41,7 @@ namespace Backend.Controllers
                                p.RoleId,
                                p.Role
                             }).ToList();
+
             return Ok(usuarios);
         }
 
@@ -47,8 +49,8 @@ namespace Backend.Controllers
         [HttpGet("detalles/{id}")]
         public IActionResult DetalleUsuario(int id)
         {
-            //var usuario = _context.Usuario.Find(id);
             //var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id);
+
             var usuario = _context.Usuario
                             .Where(u => u.Id == id)
                             .Select(p => new {
@@ -70,21 +72,41 @@ namespace Backend.Controllers
             return Ok(usuario);
         }
 
-        // POST api/values/crearUsuario
+        // POST api/values
         [HttpPost]
         public IActionResult CrearUsuario([FromBody] Usuario usuario) //Agregar un nuevo usuario.
         {
-            if (ModelState.IsValid)
-            {
-                _context.Usuario.Add(usuario);
-                _context.SaveChanges();
-
-                return Ok(usuario);
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
+
+            var userExist = _context.Usuario.Select(u => u.Usuario1).Contains(usuario.Usuario1);
+
+            if (userExist)
+            {
+                return BadRequest("Usuario Existente");
+            }
+
+            var randomSalt = _passHash.CreateSalt();
+            var hash = _passHash.CreateHash(usuario.Password, randomSalt);
+            
+
+            var userNew = new Usuario() {
+                Nombre = usuario.Nombre,
+                Apellido = usuario.Apellido,
+                Direccion = usuario.Direccion,
+                Telefono = usuario.Telefono,
+                Usuario1 = usuario.Usuario1,
+                RoleId = usuario.RoleId,
+                Password = hash,
+                HashSalt = randomSalt
+            };
+
+            _context.Usuario.Add(userNew);
+            _context.SaveChanges();
+
+            return Ok(userNew);
 
         }
 
@@ -172,18 +194,38 @@ namespace Backend.Controllers
             }
         }
 
-        //PUT api/values/cambiarPassword/3
-        [HttpPut("cambiarPassword/{id}")]
-        public IActionResult CambiarPassword (int id, [FromQuery] string oldPass, [FromQuery] string newPass)//cambio de contrasena
+        [HttpPost("verificarPass/{id}")]
+        public IActionResult VerificarPassword (int id, [FromQuery] string oldPass)
         {
-            var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id && u.Password == oldPass);
+            var user = _context.Usuario.FirstOrDefault(u => u.Id == id);
+
+            var oldSalt = user.HashSalt;
+
+            if (!_passHash.Validate(oldPass, user.HashSalt, user.Password))
+            {
+                return BadRequest();
+            }
+
+            return Ok("Contraseña coincide");
+        }
+
+        //PUT api/values/cambiarPassword/3
+        [HttpPut("cambiarPass/{id}")]
+        public IActionResult CambiarPassword (int id, [FromQuery] string newPass)//cambio de contrasena
+        {
+            var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id);
 
             if (usuario == null)
             {
                 return BadRequest();
             }
 
-            usuario.Password = newPass;
+            var newSalt = _passHash.CreateSalt();
+            var newHash = _passHash.CreateHash(newPass, newSalt);
+
+            usuario.Password = newHash;
+            usuario.HashSalt = newSalt;
+
             _context.SaveChanges();
 
             return Ok(usuario);

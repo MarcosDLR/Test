@@ -3493,11 +3493,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Context\\Context.csproj",
+      "projectUniqueName": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Context\\Context.csproj",
       "projectName": "Context",
-      "projectPath": "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Context\\Context.csproj",
+      "projectPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Context\\Context.csproj",
       "packagesPath": "C:\\Users\\LUGOTECH_RD_3\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Context\\obj\\",
+      "outputPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Context\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3516,8 +3516,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Model\\Model.csproj": {
-              "projectPath": "C:\\Users\\LUGOTECH_RD_3\\source\\repos\\Test\\Backend\\Model\\Model.csproj"
+            "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\Model.csproj": {
+              "projectPath": "C:\\Users\\LUGOTECH_RD_3\\Source\\Repos\\Test\\Backend\\Model\\Model.csproj"
             }
           }
         }

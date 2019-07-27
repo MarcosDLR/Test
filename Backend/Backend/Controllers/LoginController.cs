@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Contexts.Data;
 using Model.Models;
+using Backend.Services;
 
 namespace Backend.Controllers
 {
@@ -14,33 +15,37 @@ namespace Backend.Controllers
     {
 
         private readonly TestDbContext _context;
+        private readonly PassHashService _passHash;
 
-        public LoginController(TestDbContext context)
+        public LoginController(TestDbContext context, PassHashService passHash)
         {
             _context = context;
+            _passHash = passHash;
         }
 
         [HttpGet("login")]
         public IActionResult Validar([FromQuery] string userQ, [FromQuery] string passQ)
         {
-            string userName = userQ;
+            //string userName = userQ;
             string pass = passQ;
+
+            var user = _context.Usuario.FirstOrDefault(u => u.Usuario1 == userQ);
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            if (!_passHash.Validate(passQ, user.HashSalt, user.Password))
+            {
+                return BadRequest();
+            }
 
             //var usuario = (from us in _context.Usuario
             //               where us.Usuario1 == userName
             //               select us);
+            return Ok(user);
 
-            var user = _context.Usuario.FirstOrDefault(u => u.Usuario1 == userName && u.Password == pass);
-
-            if (user != null)
-            {
-                return Ok(user);
-            }
-            else
-            {
-                return BadRequest();
-            }
-            
         }
 
         //[HttpPost]

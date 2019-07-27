@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Contexts.Data;
+using Backend.Services;
 
 namespace Backend
 {
@@ -47,7 +48,8 @@ namespace Backend
             });
 
             services.AddDbContext<TestDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("LocalDatabase")));
+                    options.UseSqlServer(Configuration.GetConnectionString("LocalDatabase")));
+            services.AddTransient<PassHashService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
