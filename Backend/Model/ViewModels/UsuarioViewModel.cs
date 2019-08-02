@@ -13,5 +13,6 @@ namespace Model.ViewModels
         public string Telefono { get; set; }
         public string Usuario1 { get; set; }
         public int? RoleId { get; set; }
+        public int Status { get; set; }
     }
 }

@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Model.Models;
 using Model.ViewModels;
 using Backend.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Controllers
 {
+    [Authorize]
     [Route("api/values")]
     [ApiController]
     public class UsuarioController : ControllerBase
@@ -31,15 +33,16 @@ namespace Backend.Controllers
 
             var usuarios = _context.Usuario
                             .Include(r => r.Role)
-                            .Select(p => new  {
-                               p.Id,
-                               p.Nombre,
-                               p.Apellido,
-                               p.Direccion,
-                               p.Telefono,
-                               p.Usuario1,
-                               p.RoleId,
-                               p.Role
+                            .Select(p => new {
+                                p.Id,
+                                p.Nombre,
+                                p.Apellido,
+                                p.Direccion,
+                                p.Telefono,
+                                p.Usuario1,
+                                p.RoleId,
+                                p.Role,
+                                p.Status
                             }).ToList();
 
             return Ok(usuarios);
@@ -60,7 +63,8 @@ namespace Backend.Controllers
                                 p.Direccion,
                                 p.Telefono,
                                 p.Usuario1,
-                                p.RoleId
+                                p.RoleId,
+                                p.Status
                             })
                             .FirstOrDefault();
 
@@ -74,7 +78,7 @@ namespace Backend.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult CrearUsuario([FromBody] Usuario usuario) //Agregar un nuevo usuario.
+        public IActionResult CrearUsuario([FromBody] Usuario usuario, [FromQuery] int idAdmin) //Agregar un nuevo usuario.
         {
             if (!ModelState.IsValid)
             {
@@ -90,7 +94,7 @@ namespace Backend.Controllers
 
             var randomSalt = _passHash.CreateSalt();
             var hash = _passHash.CreateHash(usuario.Password, randomSalt);
-            
+
 
             var userNew = new Usuario() {
                 Nombre = usuario.Nombre,
@@ -100,11 +104,14 @@ namespace Backend.Controllers
                 Usuario1 = usuario.Usuario1,
                 RoleId = usuario.RoleId,
                 Password = hash,
-                HashSalt = randomSalt
+                HashSalt = randomSalt,
+                Status = 1
             };
 
             _context.Usuario.Add(userNew);
             _context.SaveChanges();
+
+            Actividad(idAdmin, userNew.Id, 1, "Usuarios"); //Agregando registro al log
 
             return Ok(userNew);
 
@@ -112,7 +119,7 @@ namespace Backend.Controllers
 
         // PUT api/values/editarUsuario
         [HttpPut("editarUsuario")]
-        public async Task<IActionResult> EditarUsuario([FromBody] UsuarioViewModel usuario) //Editar usuario existente
+        public IActionResult EditarUsuario([FromBody] UsuarioViewModel usuario, [FromQuery] int idAdmin) //Editar usuario existente
         {
             //var id = usuario.Id;
             if (!ModelState.IsValid)
@@ -120,23 +127,35 @@ namespace Backend.Controllers
                 return BadRequest();
             }
 
-            var userNew = _context.Usuario.FirstOrDefault(u => u.Id == usuario.Id);
+            var userEdited = _context.Usuario.FirstOrDefault(u => u.Id == usuario.Id);
+            var userAct = userEdited;
 
-            if (userNew == null)
+            if (userEdited == null)
             {
                 return BadRequest();
             }
-            else
-            {
-                userNew.Nombre = usuario.Nombre;
-                userNew.Apellido = usuario.Apellido;
-                userNew.Direccion = usuario.Direccion;
-                userNew.Telefono = usuario.Telefono;
-                userNew.Usuario1 = usuario.Usuario1;
-                userNew.RoleId = usuario.RoleId;
-                
+
+                userEdited.Nombre = usuario.Nombre;
+                userEdited.Apellido = usuario.Apellido;
+                userEdited.Direccion = usuario.Direccion;
+                userEdited.Telefono = usuario.Telefono;
+                userEdited.Usuario1 = usuario.Usuario1;
+                userEdited.RoleId = usuario.RoleId;
+                userEdited.Status = usuario.Status;
+
                 //_context.Entry(usuario).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
+
+                Actividad(idAdmin, usuario.Id, 2, "Usuarios");// Agregando registro al log
+
+            if (userAct.Status == 1 && usuario.Status == 2)
+            {
+                Actividad(idAdmin, usuario.Id, 14, "Usuarios");// Agregando registro al log
+            }
+
+            if (userAct.Status == 2 && usuario.Status == 1)
+            {
+                Actividad(idAdmin, usuario.Id, 15, "Usuarios");// Agregando registro al log
             }
 
             return Ok(usuario);
@@ -144,7 +163,7 @@ namespace Backend.Controllers
 
         // DELETE api/values/eliminarUsuario/3
         [HttpDelete("eliminarUsuario/{id}")]
-        public IActionResult Eliminar(int id) //Eliminar usuario existente
+        public IActionResult Eliminar(int id, [FromQuery] int idAdmin) //Eliminar (desactivar) usuario existente
         {
             var usuario = _context.Usuario.SingleOrDefault(u => u.Id == id);
 
@@ -153,35 +172,41 @@ namespace Backend.Controllers
                return NotFound();
             }
 
-            _context.Remove(usuario);
+            usuario.Status = 2; //cambiando a status inactivo
+
             _context.SaveChanges();
+
+            Actividad(idAdmin, id, 7, "Usuarios"); // agregando registro al log
 
             return Ok(usuario);
 
         }
 
         //Almacenar actividad en realizada
-        //POST api/values/log
         [HttpPost("log")]
-        public IActionResult Actividad ([FromQuery] int idLog, [FromQuery]int idAfectada, [FromQuery] int idAccion)
+        public IActionResult Actividad([FromQuery] int idAdmin, [FromQuery]int? idAfectada, [FromQuery] int idAccion, [FromQuery] string modulo)
         {
-            var usLogged = _context.Usuario.FirstOrDefault(u => u.Id == idLog);
+            var usLogged = _context.Usuario.FirstOrDefault(u => u.Id == idAdmin);
 
             //agregar registro a BD
             if (usLogged != null)
             {
-                Actividad registro = new Actividad {
-                    IdUsuarioAdmin = idLog,
+
+                Actividad registro = new Actividad
+                {
+                    IdUsuarioAdmin = idAdmin,
                     IdUsuario = idAfectada,
                     Fecha = DateTime.Now,
-                    IdAccion = idAccion
+                    IdAccion = idAccion,
+                    Modulo = modulo
                 };
 
                 try
                 {
                     _context.Actividad.Add(registro);
                     _context.SaveChanges();
-                }catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
@@ -190,7 +215,7 @@ namespace Backend.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest("Error");
             }
         }
 
@@ -211,7 +236,7 @@ namespace Backend.Controllers
 
         //PUT api/values/cambiarPassword/3
         [HttpPut("cambiarPass/{id}")]
-        public IActionResult CambiarPassword (int id, [FromQuery] string newPass)//cambio de contrasena
+        public IActionResult CambiarPassword (int id, [FromQuery] string newPass, [FromQuery] int idAdmin)//cambio de contrasena
         {
             var usuario = _context.Usuario.FirstOrDefault(u => u.Id == id);
 
@@ -227,6 +252,8 @@ namespace Backend.Controllers
             usuario.HashSalt = newSalt;
 
             _context.SaveChanges();
+
+            Actividad(idAdmin, id, 13, "Usuarios");//Agregando registro al log.
 
             return Ok(usuario);
         }

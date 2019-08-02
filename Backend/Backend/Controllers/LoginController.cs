@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Contexts.Data;
 using Model.Models;
 using Backend.Services;
+using Backend.Controllers;
 
 namespace Backend.Controllers
 {
@@ -16,53 +17,51 @@ namespace Backend.Controllers
 
         private readonly TestDbContext _context;
         private readonly PassHashService _passHash;
+        private readonly JwtService _jwtService;
 
-        public LoginController(TestDbContext context, PassHashService passHash)
+        public LoginController(TestDbContext context, PassHashService passHash, JwtService jwtService)
         {
             _context = context;
             _passHash = passHash;
+            _jwtService = jwtService;
         }
 
         [HttpGet("login")]
         public IActionResult Validar([FromQuery] string userQ, [FromQuery] string passQ)
         {
             //string userName = userQ;
-            string pass = passQ;
+            //string pass = passQ;
 
             var user = _context.Usuario.FirstOrDefault(u => u.Usuario1 == userQ);
 
             if (user == null)
             {
-                return BadRequest();
+                return BadRequest("Usuario inexistente o incorrecto");
+            }
+            else if (user.Status == 2)
+            {
+                return BadRequest("Usuario desactivado");
             }
 
+            //Validacion de contraseña
             if (!_passHash.Validate(passQ, user.HashSalt, user.Password))
             {
-                return BadRequest();
+                return BadRequest("Contraseña incorrecta");
             }
 
-            //var usuario = (from us in _context.Usuario
-            //               where us.Usuario1 == userName
-            //               select us);
-            return Ok(user);
+            //Creando el token
+            var jwtToken = _jwtService.CreateToken(userQ);
 
+            if (jwtToken == null)
+            {
+                return Unauthorized();
+            }
+
+            /*Agregar registro de login*/
+            UsuarioController userController = new UsuarioController(_context,  _passHash);
+            userController.Actividad(user.Id,null,11,"Login");
+
+            return Ok(new {user, jwtToken});
         }
-
-        //[HttpPost]
-        //public IActionResult Registrar([FromBody] Usuario usuario)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Usuario.Add(usuario);
-        //        _context.SaveChanges();
-
-        //        return Ok(usuario);
-        //    }
-        //    else
-        //    {
-        //        return BadRequest();
-
-        //    }
-        //}
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Models
 {
+    [Table("USR_Usuario")]
     public partial class Usuario
     {
         //public Usuario()
@@ -23,6 +24,8 @@ namespace Model.Models
         public int? RoleId { get; set; }
         [Column("HashSalt")]
         public string HashSalt { get; set; }
+        [Column("Status")]
+        public int Status { get; set; }
         public Role Role { get; set; }
 
         //public Role IdRoleNavigation { get; set; }

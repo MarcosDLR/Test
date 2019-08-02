@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Model.Models
 {
+    [Table("SYS_Accion")]
     public partial class Accion
     {
         //public Accion()
